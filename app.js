@@ -9,8 +9,9 @@ const userRoutes = require('./routes/userRoutes.js')
 
 const app = express()
 app.use(express.json())
-app.use('/users', userRoutes)
 app.use(cookieParser())
+app.use('/users', userRoutes)
+
 
 //app.use('/users', userRoutes)
 
