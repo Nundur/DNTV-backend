@@ -35,7 +35,7 @@ async function whoAmI(req, res) {
 async function register(req, res) {
     try {
         const {email, username, psw} = req.body
-
+        console.log(`${email} ${username} ${psw}`)
         if(!email || !username || !psw){
             return res.status(400).json({error:'A felhazsnálónév vagy a jelszó üres:('})
         }

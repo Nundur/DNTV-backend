@@ -6,6 +6,8 @@ const cors = require('cors')
 
 const userRoutes = require('./routes/userRoutes.js')
 
+const videoRoutes = require('./routes/uploadRoutes.js')
+
 
 
 const app = express()
@@ -19,7 +21,7 @@ app.use(cors({
 
 
 app.use('/users', userRoutes)
-
+app.use('/videos', videoRoutes)
 
 //app.use('/users', userRoutes)
 
