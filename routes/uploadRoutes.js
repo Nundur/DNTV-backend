@@ -1,18 +1,12 @@
-
 const express = require('express')
-
-
 const {getVideo, postShow, postMovie, getAllShows, getAllMovies, getFeatured,
     getMovie, getShow
 } = require('../controllers/videoController.js')
-
-
-
 const {auth} = require('../middleware/userMiddleware.js')
-
 const ruter = express.Router();
 
 
+const upload = require('../middleware/multer')
 
 
 //done
@@ -28,6 +22,8 @@ ruter.post('/getFeatured', getFeatured)//
 
 
 
+//ruter.post('/postMovie', auth, upload.single("movie"), postMovie)
+ruter.post('/postMovie', auth, upload.fields([{name:"movie", maxCount : 1},{name:"cover", maxCount : 1}]), postMovie)
 
 
 
@@ -35,7 +31,6 @@ ruter.post('/getFeatured', getFeatured)//
 
 
 //ruter.post('/postShow', auth, postShow)
-//ruter.post('/postMovie', auth, postMovie)
 
 //kep, tilte, desc
 //6 random filmet és sorozatot kiválaszt

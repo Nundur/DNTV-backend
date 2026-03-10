@@ -29,4 +29,21 @@ LIMIT ${count};`
 }
 
 
-module.exports = { allShows, allMovies, featured};
+
+
+
+
+
+
+
+
+
+const uploadMovie = async (title, desc, studio, imdb, pg, cover, image, quality ) => {
+    //                                             title, desc, studio, imdb, pg, cover, image, quality
+    const sql = 'INSERT INTO `movies`(`movieid`, `title`, `description`, `studio`, `imdbrating`, `pgrating`, `cover`, `file`, `quality`) VALUES (NULL,?,?,?,?,?,?,?,?)'
+    const [result] = await db.query(sql, [title, desc, studio, imdb, pg, cover, image, quality])
+    return result.insertId
+}
+
+
+module.exports = { allShows, allMovies, featured, uploadMovie};
