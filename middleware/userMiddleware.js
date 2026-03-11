@@ -4,9 +4,9 @@ const { config } = require('../config/dotenvConfig')
 
 
 function auth(req, res, next) {
-    // console.log(req);
+    //console.log(req);
     const token = req.cookies?.[config.COOKIE_NAME]
-    console.log(token);
+    //clearconsole.log(`${token} - asd `);
     if (!token) {
         return res.status(401).json({error: 'nincsen cookie'})
     }
