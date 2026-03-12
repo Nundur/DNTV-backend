@@ -53,8 +53,12 @@ async function register(req, res) {
         const {insertId} = await createUser(username, email, hash)
         return res.status(201).json({message : 'sikeres regisztráció', insertId})
     } catch (err) {
-        console.log(err)
-        return res.status(500).json({error:'regisztrációs hiba!', err})
+        console.log(err.code)
+        if (err.code == "ER_DUP_ENTRY") {
+            return res.status(500).json({error:'Felhazsnáló már foglalt!', err}) 
+        }
+        return res.status(500).json({error:'Regisztrációs hiba!', err})
+        
     }
 }
 

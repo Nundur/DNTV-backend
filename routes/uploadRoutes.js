@@ -13,10 +13,6 @@ const upload = require('../middleware/multer')
 ruter.get('/getAllShows', getAllShows)
 ruter.get('/getAllMovies', getAllMovies)
 
-//ruter.get('/getAllShow/:showid', getShow)
-//ruter.get('/getAllMovie/:movieid', getMovie)
-
-//
 ruter.post('/getFeatured', getFeatured)//
 
 
@@ -26,7 +22,7 @@ ruter.post('/getFeatured', getFeatured)//
 ruter.post('/postMovie', auth, upload.fields([{name:"movie", maxCount : 1},{name:"cover", maxCount : 1}]), postMovie)
 
 
-
+ruter.post('/postShow', auth, upload.fields([{name:"episodes", maxCount : 100},{name:"cover", maxCount : 1}]), postShow)
 
 
 

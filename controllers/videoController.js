@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const {config} = require('../config/dotenvConfig')
-const {allShows, allMovies, createUser, uploadMovie, featured} = require('../models/videoModels.js')
+const {allShows, allMovies, createUser, uploadMovie, featured, uploadShows} = require('../models/videoModels.js')
 const { rollback } = require('../db/db.js')
 
 
@@ -78,5 +78,28 @@ const postMovie = async(req, res)=>{
 
 
 
+const postShow = async(req, res)=>{
+    try {
+        //title, desc, studio, imdb, pg, cover, image, quality
+        const { title, desc, studio, imdb, pg, quality, season } = req.body;
+        
+        const cover = req.files?.cover ? req.files.cover[0].filename : null
+        const episodes = req.files?.episodes ? req.files.episodes : null
+        
 
-module.exports = {getAllShows, getAllMovies, getFeatured, postMovie};
+        console.log(req.files)
+
+        console.log(`${title}, ${desc}, ${studio}, ${imdb}, ${pg}, ${cover}, ${quality} ${episodes} ${season}`)
+
+        //                               title, desc, studio, imdb, pg, cover, quality, episodes, season 
+        const result = await uploadShows(title, desc, studio, imdb, pg, cover, quality, episodes, season)
+        return res.status(201).json({message : 'sikerült:D ', result})
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({ error: 'Adatbázis hiba ', err })
+    }
+}
+
+
+
+module.exports = {getAllShows, getAllMovies, getFeatured, postMovie, postShow};
