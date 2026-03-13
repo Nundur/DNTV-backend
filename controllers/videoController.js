@@ -43,7 +43,7 @@ const postVideo = async (req, res)=>{
 }
 
 
-const getFeatured = async (req, res)=>{
+const getRandomProjects = async (req, res)=>{
     try {
         const {count} = req.body
         const result = await featured(count)
@@ -102,4 +102,4 @@ const postShow = async(req, res)=>{
 
 
 
-module.exports = {getAllShows, getAllMovies, getFeatured, postMovie, postShow};
+module.exports = {getAllShows, getAllMovies, getRandomProjects, postMovie, postShow};
