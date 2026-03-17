@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken')
 const {config} = require('../config/dotenvConfig')
 const {allShows, allMovies, createUser, uploadMovie, featured, uploadShows} = require('../models/videoModels.js')
 const { rollback } = require('../db/db.js')
+const fs = require("fs");
+const path = require("path");
 
 
 
@@ -87,9 +89,9 @@ const postShow = async(req, res)=>{
         const episodes = req.files?.episodes ? req.files.episodes : null
         
 
-        console.log(req.files)
+        //console.log(req.files)
 
-        console.log(`${title}, ${desc}, ${studio}, ${imdb}, ${pg}, ${cover}, ${quality} ${episodes} ${season}`)
+        //console.log(`${title}, ${desc}, ${studio}, ${imdb}, ${pg}, ${cover}, ${quality} ${episodes} ${season}`)
 
         //                               title, desc, studio, imdb, pg, cover, quality, episodes, season 
         const result = await uploadShows(title, desc, studio, imdb, pg, cover, quality, episodes, season)
@@ -99,7 +101,72 @@ const postShow = async(req, res)=>{
         return res.status(500).json({ error: 'Adatbázis hiba ', err })
     }
 }
+const streamShow = (req, res) => {
+    const videoPath = path.join("uploads/movies", req.params.filename);
+  
 
 
 
-module.exports = {getAllShows, getAllMovies, getRandomProjects, postMovie, postShow};
+
+
+
+    if (!fs.existsSync(videoPath)) {
+      return res.status(404).send("Video not found");
+    }
+  
+    const stat = fs.statSync(videoPath);
+    const fileSize = stat.size;
+  
+    const range = req.headers.range;
+    if (!range) return res.status(400).send("Range header required");
+  
+    const parts = range.replace(/bytes=/, "").split("-");
+    const start = parseInt(parts[0], 10);
+    const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+    const chunkSize = end - start + 1;
+  
+    const stream = fs.createReadStream(videoPath, { start, end });
+  
+    res.writeHead(206, {
+      "Content-Range": `bytes ${start}-${end}/${fileSize}`,
+      "Accept-Ranges": "bytes",
+      "Content-Length": chunkSize,
+      "Content-Type": "video/mp4",
+    });
+  
+    stream.pipe(res);
+}
+
+
+
+const streamMovie = (req, res) => {
+    const videoPath = path.join("uploads/movies", req.params.filename);
+    if (!fs.existsSync(videoPath)) {
+      return res.status(404).send("Video not found");
+    }
+  
+    const stat = fs.statSync(videoPath);
+    const fileSize = stat.size;
+  
+    const range = req.headers.range;
+    if (!range) return res.status(400).send("Range header required");
+  
+    const parts = range.replace(/bytes=/, "").split("-");
+    const start = parseInt(parts[0], 10);
+    const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+    const chunkSize = end - start + 1;
+  
+    const stream = fs.createReadStream(videoPath, { start, end });
+  
+    res.writeHead(206, {
+      "Content-Range": `bytes ${start}-${end}/${fileSize}`,
+      "Accept-Ranges": "bytes",
+      "Content-Length": chunkSize,
+      "Content-Type": "video/mp4",
+    });
+  
+    stream.pipe(res);
+}
+
+
+module.exports = {getAllShows, getAllMovies, getRandomProjects, postMovie, postShow, streamShow, streamMovie};

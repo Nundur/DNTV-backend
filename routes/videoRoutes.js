@@ -1,6 +1,6 @@
 const express = require('express')
 const {getVideo, postShow, postMovie, getAllShows, getAllMovies, getRandomProjects,
-    getMovie, getShow
+    getMovie, getShow, streamShow, streamMovie
 } = require('../controllers/videoController.js')
 const {auth} = require('../middleware/userMiddleware.js')
 const ruter = express.Router();
@@ -22,7 +22,8 @@ ruter.post('/getRandomProjects', getRandomProjects)
 ruter.post('/postMovie', auth, upload.fields([{name:"movie", maxCount : 1},{name:"cover", maxCount : 1}]), postMovie)
 ruter.post('/postShow', auth, upload.fields([{name:"episodes", maxCount : 100},{name:"cover", maxCount : 1}]), postShow)
 
-
+ruter.get('/show/:filename', streamShow)
+ruter.get('/movie/:filename', streamMovie)
 
 //ruter.post('/postShow', auth, postShow)
 
