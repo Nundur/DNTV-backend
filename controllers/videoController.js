@@ -1,7 +1,13 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const {config} = require('../config/dotenvConfig')
-const {allShows, allMovies, createUser, uploadMovie, featured, uploadShows} = require('../models/videoModels.js')
+const {allShows, allMovies, createUser, uploadMovie, featured, uploadShows,
+
+    TopRatedMovies,
+    TopRatedTvSeries, TopRatedTvSeriesAndMovies,
+    ProjectsByStudio,
+    ProjectsByPG
+} = require('../models/videoModels.js')
 const { rollback } = require('../db/db.js')
 const fs = require("fs");
 const path = require("path");
@@ -29,7 +35,7 @@ const getAllMovies = async (req, res)=>{
     }
 }
 
-
+/*
 const postVideo = async (req, res)=>{
     try {
         const { nev } = req.body;
@@ -42,7 +48,7 @@ const postVideo = async (req, res)=>{
     } catch (err) {
         return res.status(500).json({error: 'adatbázis hiba', err})
     }
-}
+}*/
 
 
 const getRandomProjects = async (req, res)=>{
@@ -101,6 +107,104 @@ const postShow = async(req, res)=>{
         return res.status(500).json({ error: 'Adatbázis hiba ', err })
     }
 }
+
+
+const getTopRatedTvSeries = async(req, res)=>{
+    try {
+        //title, desc, studio, imdb, pg, cover, image, quality
+        //const { title, desc, studio, imdb, pg, quality } = req.body;
+        const count = req.params.count;
+
+        
+        const result = await TopRatedTvSeries(count)
+        return res.status(201).json(result)
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({ error: 'Adatbázis hiba ', err })
+    }
+}
+
+const getTopRatedMovies = async(req, res)=>{
+    try {
+        //title, desc, studio, imdb, pg, cover, image, quality
+        //const { title, desc, studio, imdb, pg, quality } = req.body;
+        const count = req.params.count;
+
+
+        
+        const result = await TopRatedMovies(count)
+        return res.status(201).json(result)
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({ error: 'Adatbázis hiba ', err })
+    }
+}
+
+
+
+const getTopRatedTvSeriesAndMovies = async(req, res)=>{
+    try {
+        //title, desc, studio, imdb, pg, cover, image, quality
+        //const { title, desc, studio, imdb, pg, quality } = req.body;
+        
+        const count= req.params.count;
+        
+        const result = await TopRatedTvSeriesAndMovies(count)
+        return res.status(201).json(result)
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({ error: 'Adatbázis hiba ', err })
+    }
+}
+
+const getProjectsByStudio = async(req, res)=>{
+    try {
+        //title, desc, studio, imdb, pg, cover, image, quality
+        //const { title, desc, studio, imdb, pg, quality } = req.body;
+        
+        const studio =req.params.studio;
+        
+        const result = await ProjectsByStudio(studio)
+        return res.status(201).json(result)
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({ error: 'Adatbázis hiba ', err })
+    }
+}
+
+
+
+const getProjectsByPG = async(req, res)=>{
+    try {
+        //title, desc, studio, imdb, pg, cover, image, quality
+        //const { title, desc, studio, imdb, pg, quality } = req.body;
+        
+        const pg = req.params.pg;
+        
+        const result = await ProjectsByPG(pg)
+        return res.status(201).json(result)
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({ error: 'Adatbázis hiba ', err })
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 const streamShow = (req, res) => {
     const videoPath = path.join("uploads/movies", req.params.filename);
   
@@ -167,6 +271,9 @@ const streamMovie = (req, res) => {
   
     stream.pipe(res);
 }
+*/
 
 
-module.exports = {getAllShows, getAllMovies, getRandomProjects, postMovie, postShow, streamShow, streamMovie};
+
+
+module.exports = {getAllShows, getAllMovies, getRandomProjects, postMovie, postShow, getTopRatedTvSeries, getTopRatedMovies, getTopRatedTvSeriesAndMovies, getProjectsByStudio, getProjectsByPG};
