@@ -61,9 +61,9 @@ const TopRatedMovies = async (count) => {
 const TopRatedTvSeriesAndMovies = async (count) => {
     //                                             title, desc, studio, imdb, pg, cover, image, quality
     const sql = `SELECT * FROM (
-    SELECT movieid, title, description, studio, imdbrating, pgrating, cover, quality, NULL AS episodeid, NULL AS season FROM movies
+    SELECT movieid, title, description, studio, imdbrating, pgrating, cover, quality, NULL AS episodeid, NULL AS season, file FROM movies
     UNION ALL
-    SELECT showid, title, description, studio, imdbrating, pgrating, cover, quality, 1 AS episodeid, 1 AS season FROM shows
+    SELECT showid, title, description, studio, imdbrating, pgrating, cover, quality, 1 AS episodeid, 1 AS season, NULL AS file FROM shows
 ) AS combined
 ORDER BY imdbrating DESC LIMIT ?`
     const [result] = await db.query(sql, [parseInt(count)])
@@ -109,19 +109,36 @@ const uploadShows = async (title, desc, studio, imdb, pg, cover, quality, episod
     
         return getEpisode(a.originalname) - getEpisode(b.originalname);  
     });
-    
-    const insertToShowsSql = 'INSERT INTO `shows`(`showid`, `title`, `description`, `studio`, `imdbrating`, `pgrating`, `cover`, `quality`) VALUES (NULL,?,?,?,?,?,?,?)'
-    const [result] = await db.query(insertToShowsSql, [title, desc, studio, imdb, pg, cover, quality])
-    results.push(result)
-    console.log(result)
 
 
-    for (const file of episodes){
-        const sql = 'INSERT INTO `show_episodes`(`episodeid`, `showid`, `season`, `title`, `description`, `imdbrating`, `pgrating`, `file`, `quality`) VALUES (NULL,?,?,?,?,?,?,?,?)'
-        const [episodeResult] = await db.query(sql, [result.insertId, season, title, desc, imdb, pg, file.filename, quality])
+
+    if (season==1) {
+        //megnézi hogy létezik e már az adott show, és ha igen, ne pusholja fel megintxd (avoid duplication)
+        const checkSql = `SELECT * FROM movies WHERE title = ?`
+        const [checkResult] = await db.query(checkSql, [title])
+        //if
+        if (checkResult.length == 0) {
+            //ha viszoiiunt nem létezik akkor inserteljen uj showt
+            const insertToShowsSql = 'INSERT INTO `shows`(`showid`, `title`, `description`, `studio`, `imdbrating`, `pgrating`, `cover`, `quality`) VALUES (NULL,?,?,?,?,?,?,?)'
+            const [result] = await db.query(insertToShowsSql, [title, desc, studio, imdb, pg, cover, quality])
+            results.push(result)
+            console.log(result)
+        }
+        //console.log(result.length)
+        
+        
+    }
+
+    for (let i = 0; i < episodes.length; i++) {
+        const sql = 'INSERT INTO `show_episodes`(`episodeid`, `showid`, `season`, `title`, `description`, `imdbrating`, `pgrating`, `file`, `quality`, `episode`) VALUES (NULL,?,?,?,?,?,?,?,?,?)'
+        const [episodeResult] = await db.query(sql, [result.insertId, season, title, desc, imdb, pg, episodes[i].filename, quality, i+1])
         results.push(episodeResult)
         console.log(episodeResult)
     }
+
+    //for (const file of episodes){
+        
+    //}
     return results;
 }
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2026. Már 18. 13:43
+-- Létrehozás ideje: 2026. Már 19. 14:00
 -- Kiszolgáló verziója: 10.4.28-MariaDB
 -- PHP verzió: 8.2.4
 
@@ -37,6 +37,31 @@ CREATE TABLE `actors` (
   `movieid` int(11) NOT NULL,
   `showid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `feedbacks`
+--
+
+CREATE TABLE `feedbacks` (
+  `feedbackid` int(11) NOT NULL,
+  `subject` varchar(255) NOT NULL,
+  `category` varchar(255) NOT NULL,
+  `message` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `feedbacks`
+--
+
+INSERT INTO `feedbacks` (`feedbackid`, `subject`, `category`, `message`) VALUES
+(1, 'anyád', 'Bug report', 'tul tagadt. És roman'),
+(2, 'anyád', 'Bug report', 'tul tagadt. És roman'),
+(3, 'anyád', 'Bug report', 'tul tagadt. És roman'),
+(4, 'anyád', 'Bug report', 'tul tagadt. És roman'),
+(5, 'anyád', 'Bug report', 'tul tagadt. És roman'),
+(6, 'anyád', 'Bug report', 'tul tagadt. És roman');
 
 -- --------------------------------------------------------
 
@@ -116,45 +141,46 @@ CREATE TABLE `show_episodes` (
   `imdbrating` double NOT NULL,
   `pgrating` varchar(255) NOT NULL,
   `file` varchar(255) NOT NULL,
-  `quality` varchar(255) NOT NULL
+  `quality` varchar(255) NOT NULL,
+  `episode` int(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
 -- A tábla adatainak kiíratása `show_episodes`
 --
 
-INSERT INTO `show_episodes` (`episodeid`, `showid`, `season`, `title`, `description`, `imdbrating`, `pgrating`, `file`, `quality`) VALUES
-(21, 12, '1', 'A Knight Of The Seven Kingdoms', 'A century before the events of \"Game of Thrones,\" two unlikely heroes wander Westeros. In an adaption of George R. R. Martin\'s novella \"The Hedge Knight,\" a young and naive but courageous knight, Ser Duncan the Tall, and his diminutive squire, Egg, face a', 8.8, 'TV-MA', '2026-03-18-AKnightOfTheSevenKingdomsS1E1.mp4', 'HD'),
-(22, 12, '1', 'A Knight Of The Seven Kingdoms', 'A century before the events of \"Game of Thrones,\" two unlikely heroes wander Westeros. In an adaption of George R. R. Martin\'s novella \"The Hedge Knight,\" a young and naive but courageous knight, Ser Duncan the Tall, and his diminutive squire, Egg, face a', 8.8, 'TV-MA', '2026-03-18-AKnightOfTheSevenKingdomsS1E2.mp4', 'HD'),
-(23, 12, '1', 'A Knight Of The Seven Kingdoms', 'A century before the events of \"Game of Thrones,\" two unlikely heroes wander Westeros. In an adaption of George R. R. Martin\'s novella \"The Hedge Knight,\" a young and naive but courageous knight, Ser Duncan the Tall, and his diminutive squire, Egg, face a', 8.8, 'TV-MA', '2026-03-18-AKnightOfTheSevenKingdomsS1E3.mp4', 'HD'),
-(24, 13, '1', 'Breaking Bad', 'Created by Vince Gilligan, the series follows the exploits of Walter White, a modest high school chemistry teacher, who discovers a new purpose in life when he learns he has terminal cancer and turns to a life of crime to provide for his family.', 9.5, 'TV-MA', '2026-03-18-breakingbadS1E1.mp4', 'HD'),
-(25, 13, '1', 'Breaking Bad', 'Created by Vince Gilligan, the series follows the exploits of Walter White, a modest high school chemistry teacher, who discovers a new purpose in life when he learns he has terminal cancer and turns to a life of crime to provide for his family.', 9.5, 'TV-MA', '2026-03-18-breakingbadS1E2.mp4', 'HD'),
-(26, 14, '1', 'Family Guy', 'Family Guy is an American animated sitcom created by Seth MacFarlane for the Fox Broadcasting Company. The series premiered on January 31, 1999, following Super Bowl XXXIII, with the rest of the first season airing from April 11, 1999. The show centers ar', 8.4, 'TV-14', '2026-03-18-familyguyS1E1.mp4', 'HD'),
-(27, 14, '1', 'Family Guy', 'Family Guy is an American animated sitcom created by Seth MacFarlane for the Fox Broadcasting Company. The series premiered on January 31, 1999, following Super Bowl XXXIII, with the rest of the first season airing from April 11, 1999. The show centers ar', 8.4, 'TV-14', '2026-03-18-familyguyS1E2.mp4', 'HD'),
-(28, 14, '1', 'Family Guy', 'Family Guy is an American animated sitcom created by Seth MacFarlane for the Fox Broadcasting Company. The series premiered on January 31, 1999, following Super Bowl XXXIII, with the rest of the first season airing from April 11, 1999. The show centers ar', 8.4, 'TV-14', '2026-03-18-familyguyS1E3.mp4', 'HD'),
-(29, 14, '1', 'Family Guy', 'Family Guy is an American animated sitcom created by Seth MacFarlane for the Fox Broadcasting Company. The series premiered on January 31, 1999, following Super Bowl XXXIII, with the rest of the first season airing from April 11, 1999. The show centers ar', 8.4, 'TV-14', '2026-03-18-familyguyS1E4.mp4', 'HD'),
-(30, 15, '1', 'Game of Thrones', 'Game of Thrones describes a long struggle for power between noble families while a threat looms over their kingdoms, an external enemy that destroys everything in its path: the White Walkers. The series takes place on two continents, Westeros to the west,', 9.2, 'TV-MA', '2026-03-18-gotS1E1.mp4', '4K'),
-(31, 15, '1', 'Game of Thrones', 'Game of Thrones describes a long struggle for power between noble families while a threat looms over their kingdoms, an external enemy that destroys everything in its path: the White Walkers. The series takes place on two continents, Westeros to the west,', 9.2, 'TV-MA', '2026-03-18-gotS1E2.mp4', '4K'),
-(32, 15, '1', 'Game of Thrones', 'Game of Thrones describes a long struggle for power between noble families while a threat looms over their kingdoms, an external enemy that destroys everything in its path: the White Walkers. The series takes place on two continents, Westeros to the west,', 9.2, 'TV-MA', '2026-03-18-gotS1E3.mp4', '4K'),
-(33, 16, '1', 'Shogun', 'shogun, in Japanese history, a military ruler. The title was first used during the Heian period, when it was occasionally bestowed on a general after a successful campaign.', 8.6, 'TV-MA', '2026-03-18-ShogunS1E1.mp4', '4K'),
-(34, 16, '1', 'Shogun', 'shogun, in Japanese history, a military ruler. The title was first used during the Heian period, when it was occasionally bestowed on a general after a successful campaign.', 8.6, 'TV-MA', '2026-03-18-Shogun S1E2.mp4', '4K'),
-(35, 17, '1', 'Silo', 'Set in a dystopian future where a community exists in a giant underground silo comprising 144 levels, it stars Rebecca Ferguson as Juliette Nichols, an engineer who becomes embroiled in the mysteries of its past and present.', 8.1, 'TV-MA', '2026-03-18-SiloS1E1.mp4', 'HD'),
-(36, 17, '1', 'Silo', 'Set in a dystopian future where a community exists in a giant underground silo comprising 144 levels, it stars Rebecca Ferguson as Juliette Nichols, an engineer who becomes embroiled in the mysteries of its past and present.', 8.1, 'TV-MA', '2026-03-18-SiloS1E2.mp4', 'HD'),
-(37, 18, '1', 'The Boys', 'The series follows the eponymous Boys, led by Billy Butcher, a group of vigilantes looking to bring down Vought International and expose its corrupt superheroes. When his girlfriend is accidentally killed by A-Train, Hughie Campbell joins the Boys to get ', 8.6, 'TV-MA', '2026-03-18-TheBoysS1E1.mp4', '8K'),
-(38, 18, '1', 'The Boys', 'The series follows the eponymous Boys, led by Billy Butcher, a group of vigilantes looking to bring down Vought International and expose its corrupt superheroes. When his girlfriend is accidentally killed by A-Train, Hughie Campbell joins the Boys to get ', 8.6, 'TV-MA', '2026-03-18-TheBoysS1E2.mp4', '8K'),
-(39, 19, '2', 'The Boys', 'On the run from the law, they struggle to fight back against the Superheroes. As Vought, the company that manages the heroes, cashes in on the panic over the threat of Supervillains, and a new hero, Stormfront, shakes up the company and challenges an alre', 8.6, 'TV-MA', '2026-03-18-TheBoysS2E1.mp4', '8K'),
-(40, 19, '2', 'The Boys', 'On the run from the law, they struggle to fight back against the Superheroes. As Vought, the company that manages the heroes, cashes in on the panic over the threat of Supervillains, and a new hero, Stormfront, shakes up the company and challenges an alre', 8.6, 'TV-MA', '2026-03-18-TheBoysS2E2.mp4', '8K'),
-(41, 19, '2', 'The Boys', 'On the run from the law, they struggle to fight back against the Superheroes. As Vought, the company that manages the heroes, cashes in on the panic over the threat of Supervillains, and a new hero, Stormfront, shakes up the company and challenges an alre', 8.6, 'TV-MA', '2026-03-18-TheBoysS2E3.mp4', '8K'),
-(42, 20, '3', 'The Boys', 'In the third season, one year after the Stormfront scandal, The Boys work for Victoria Neuman (Claudia Doumit)\'s Bureau of Superhero Affairs to apprehend problematic Supes, having been at peace with The Seven; Butcher and Homelander itch to turn this peac', 8.6, 'TV-MA', '2026-03-18-TheBoysS3E1.mp4', '4K'),
-(43, 20, '3', 'The Boys', 'In the third season, one year after the Stormfront scandal, The Boys work for Victoria Neuman (Claudia Doumit)\'s Bureau of Superhero Affairs to apprehend problematic Supes, having been at peace with The Seven; Butcher and Homelander itch to turn this peac', 8.6, 'TV-MA', '2026-03-18-TheBoysS3E2.mp4', '4K'),
-(44, 20, '3', 'The Boys', 'In the third season, one year after the Stormfront scandal, The Boys work for Victoria Neuman (Claudia Doumit)\'s Bureau of Superhero Affairs to apprehend problematic Supes, having been at peace with The Seven; Butcher and Homelander itch to turn this peac', 8.6, 'TV-MA', '2026-03-18-TheBoysS3E3.mp4', '4K'),
-(45, 21, '4', 'The Boys', 'With only months to live, Butcher has lost his position as leader of The Boys, who are fed up with his lies, and must find a way to work with them if they want to save the world before it\'s too late.', 8.6, 'TV-MA', '2026-03-18-TheBoysS4E1.mp4', '4K'),
-(46, 21, '4', 'The Boys', 'With only months to live, Butcher has lost his position as leader of The Boys, who are fed up with his lies, and must find a way to work with them if they want to save the world before it\'s too late.', 8.6, 'TV-MA', '2026-03-18-TheBoysS4E2.mp4', '4K'),
-(47, 22, '5', 'The Boys', 'In the season, the world is dominated by Homelander and Annie January has formed a resistance to Homelander while the rest of the team is scattered. But when Billy Butcher reappears, ready to use the virus to wipe out the Supes of the world, he sets in mo', 8.6, 'TV-MA', '2026-03-18-TheBoysS5E1.mp4', '4K'),
-(48, 22, '5', 'The Boys', 'In the season, the world is dominated by Homelander and Annie January has formed a resistance to Homelander while the rest of the team is scattered. But when Billy Butcher reappears, ready to use the virus to wipe out the Supes of the world, he sets in mo', 8.6, 'TV-MA', '2026-03-18-TheBoysS5E2.mp4', '4K'),
-(49, 23, '1', 'Paradise', 'Paradise is set in a serene community inhabited by some of the world\'s most prominent individuals. But this tranquility explodes when a shocking murder occurs and a high-stakes investigation unfolds.', 7.9, 'TV-MA', '2026-03-18-ParadiseS1E1.mp4', 'HD'),
-(50, 23, '1', 'Paradise', 'Paradise is set in a serene community inhabited by some of the world\'s most prominent individuals. But this tranquility explodes when a shocking murder occurs and a high-stakes investigation unfolds.', 7.9, 'TV-MA', '2026-03-18-ParadiseS1E2.mp4', 'HD'),
-(51, 24, '2', 'Paradise', 'Season 2 of the Hulu Original post-apocalyptic political thriller Paradise was picked up on February 20, 2025. It premiered with the first three episodes on February 23, 2026, with new episodes dropping weekly thereafter on Hulu and Hulu on Disney+ for bu', 7.9, 'TV-MA', '2026-03-18-ParadiseS2E1.mp4', 'HD');
+INSERT INTO `show_episodes` (`episodeid`, `showid`, `season`, `title`, `description`, `imdbrating`, `pgrating`, `file`, `quality`, `episode`) VALUES
+(21, 12, '1', 'A Knight Of The Seven Kingdoms', 'A century before the events of \"Game of Thrones,\" two unlikely heroes wander Westeros. In an adaption of George R. R. Martin\'s novella \"The Hedge Knight,\" a young and naive but courageous knight, Ser Duncan the Tall, and his diminutive squire, Egg, face a', 8.8, 'TV-MA', '2026-03-18-AKnightOfTheSevenKingdomsS1E1.mp4', 'HD', 1),
+(22, 12, '1', 'A Knight Of The Seven Kingdoms', 'A century before the events of \"Game of Thrones,\" two unlikely heroes wander Westeros. In an adaption of George R. R. Martin\'s novella \"The Hedge Knight,\" a young and naive but courageous knight, Ser Duncan the Tall, and his diminutive squire, Egg, face a', 8.8, 'TV-MA', '2026-03-18-AKnightOfTheSevenKingdomsS1E2.mp4', 'HD', 2),
+(23, 12, '1', 'A Knight Of The Seven Kingdoms', 'A century before the events of \"Game of Thrones,\" two unlikely heroes wander Westeros. In an adaption of George R. R. Martin\'s novella \"The Hedge Knight,\" a young and naive but courageous knight, Ser Duncan the Tall, and his diminutive squire, Egg, face a', 8.8, 'TV-MA', '2026-03-18-AKnightOfTheSevenKingdomsS1E3.mp4', 'HD', 3),
+(24, 13, '1', 'Breaking Bad', 'Created by Vince Gilligan, the series follows the exploits of Walter White, a modest high school chemistry teacher, who discovers a new purpose in life when he learns he has terminal cancer and turns to a life of crime to provide for his family.', 9.5, 'TV-MA', '2026-03-18-breakingbadS1E1.mp4', 'HD', 1),
+(25, 13, '1', 'Breaking Bad', 'Created by Vince Gilligan, the series follows the exploits of Walter White, a modest high school chemistry teacher, who discovers a new purpose in life when he learns he has terminal cancer and turns to a life of crime to provide for his family.', 9.5, 'TV-MA', '2026-03-18-breakingbadS1E2.mp4', 'HD', 2),
+(26, 14, '1', 'Family Guy', 'Family Guy is an American animated sitcom created by Seth MacFarlane for the Fox Broadcasting Company. The series premiered on January 31, 1999, following Super Bowl XXXIII, with the rest of the first season airing from April 11, 1999. The show centers ar', 8.4, 'TV-14', '2026-03-18-familyguyS1E1.mp4', 'HD', 1),
+(27, 14, '1', 'Family Guy', 'Family Guy is an American animated sitcom created by Seth MacFarlane for the Fox Broadcasting Company. The series premiered on January 31, 1999, following Super Bowl XXXIII, with the rest of the first season airing from April 11, 1999. The show centers ar', 8.4, 'TV-14', '2026-03-18-familyguyS1E2.mp4', 'HD', 2),
+(28, 14, '1', 'Family Guy', 'Family Guy is an American animated sitcom created by Seth MacFarlane for the Fox Broadcasting Company. The series premiered on January 31, 1999, following Super Bowl XXXIII, with the rest of the first season airing from April 11, 1999. The show centers ar', 8.4, 'TV-14', '2026-03-18-familyguyS1E3.mp4', 'HD', 3),
+(29, 14, '1', 'Family Guy', 'Family Guy is an American animated sitcom created by Seth MacFarlane for the Fox Broadcasting Company. The series premiered on January 31, 1999, following Super Bowl XXXIII, with the rest of the first season airing from April 11, 1999. The show centers ar', 8.4, 'TV-14', '2026-03-18-familyguyS1E4.mp4', 'HD', 4),
+(30, 15, '1', 'Game of Thrones', 'Game of Thrones describes a long struggle for power between noble families while a threat looms over their kingdoms, an external enemy that destroys everything in its path: the White Walkers. The series takes place on two continents, Westeros to the west,', 9.2, 'TV-MA', '2026-03-18-gotS1E1.mp4', '4K', 1),
+(31, 15, '1', 'Game of Thrones', 'Game of Thrones describes a long struggle for power between noble families while a threat looms over their kingdoms, an external enemy that destroys everything in its path: the White Walkers. The series takes place on two continents, Westeros to the west,', 9.2, 'TV-MA', '2026-03-18-gotS1E2.mp4', '4K', 2),
+(32, 15, '1', 'Game of Thrones', 'Game of Thrones describes a long struggle for power between noble families while a threat looms over their kingdoms, an external enemy that destroys everything in its path: the White Walkers. The series takes place on two continents, Westeros to the west,', 9.2, 'TV-MA', '2026-03-18-gotS1E3.mp4', '4K', 3),
+(33, 16, '1', 'Shogun', 'shogun, in Japanese history, a military ruler. The title was first used during the Heian period, when it was occasionally bestowed on a general after a successful campaign.', 8.6, 'TV-MA', '2026-03-18-ShogunS1E1.mp4', '4K', 1),
+(34, 16, '1', 'Shogun', 'shogun, in Japanese history, a military ruler. The title was first used during the Heian period, when it was occasionally bestowed on a general after a successful campaign.', 8.6, 'TV-MA', '2026-03-18-Shogun S1E2.mp4', '4K', 2),
+(35, 17, '1', 'Silo', 'Set in a dystopian future where a community exists in a giant underground silo comprising 144 levels, it stars Rebecca Ferguson as Juliette Nichols, an engineer who becomes embroiled in the mysteries of its past and present.', 8.1, 'TV-MA', '2026-03-18-SiloS1E1.mp4', 'HD', 1),
+(36, 17, '1', 'Silo', 'Set in a dystopian future where a community exists in a giant underground silo comprising 144 levels, it stars Rebecca Ferguson as Juliette Nichols, an engineer who becomes embroiled in the mysteries of its past and present.', 8.1, 'TV-MA', '2026-03-18-SiloS1E2.mp4', 'HD', 2),
+(37, 18, '1', 'The Boys', 'The series follows the eponymous Boys, led by Billy Butcher, a group of vigilantes looking to bring down Vought International and expose its corrupt superheroes. When his girlfriend is accidentally killed by A-Train, Hughie Campbell joins the Boys to get ', 8.6, 'TV-MA', '2026-03-18-TheBoysS1E1.mp4', '8K', 1),
+(38, 18, '1', 'The Boys', 'The series follows the eponymous Boys, led by Billy Butcher, a group of vigilantes looking to bring down Vought International and expose its corrupt superheroes. When his girlfriend is accidentally killed by A-Train, Hughie Campbell joins the Boys to get ', 8.6, 'TV-MA', '2026-03-18-TheBoysS1E2.mp4', '8K', 2),
+(39, 19, '2', 'The Boys', 'On the run from the law, they struggle to fight back against the Superheroes. As Vought, the company that manages the heroes, cashes in on the panic over the threat of Supervillains, and a new hero, Stormfront, shakes up the company and challenges an alre', 8.6, 'TV-MA', '2026-03-18-TheBoysS2E1.mp4', '8K', 1),
+(40, 19, '2', 'The Boys', 'On the run from the law, they struggle to fight back against the Superheroes. As Vought, the company that manages the heroes, cashes in on the panic over the threat of Supervillains, and a new hero, Stormfront, shakes up the company and challenges an alre', 8.6, 'TV-MA', '2026-03-18-TheBoysS2E2.mp4', '8K', 2),
+(41, 19, '2', 'The Boys', 'On the run from the law, they struggle to fight back against the Superheroes. As Vought, the company that manages the heroes, cashes in on the panic over the threat of Supervillains, and a new hero, Stormfront, shakes up the company and challenges an alre', 8.6, 'TV-MA', '2026-03-18-TheBoysS2E3.mp4', '8K', 3),
+(42, 20, '3', 'The Boys', 'In the third season, one year after the Stormfront scandal, The Boys work for Victoria Neuman (Claudia Doumit)\'s Bureau of Superhero Affairs to apprehend problematic Supes, having been at peace with The Seven; Butcher and Homelander itch to turn this peac', 8.6, 'TV-MA', '2026-03-18-TheBoysS3E1.mp4', '4K', 1),
+(43, 20, '3', 'The Boys', 'In the third season, one year after the Stormfront scandal, The Boys work for Victoria Neuman (Claudia Doumit)\'s Bureau of Superhero Affairs to apprehend problematic Supes, having been at peace with The Seven; Butcher and Homelander itch to turn this peac', 8.6, 'TV-MA', '2026-03-18-TheBoysS3E2.mp4', '4K', 2),
+(44, 20, '3', 'The Boys', 'In the third season, one year after the Stormfront scandal, The Boys work for Victoria Neuman (Claudia Doumit)\'s Bureau of Superhero Affairs to apprehend problematic Supes, having been at peace with The Seven; Butcher and Homelander itch to turn this peac', 8.6, 'TV-MA', '2026-03-18-TheBoysS3E3.mp4', '4K', 3),
+(45, 21, '4', 'The Boys', 'With only months to live, Butcher has lost his position as leader of The Boys, who are fed up with his lies, and must find a way to work with them if they want to save the world before it\'s too late.', 8.6, 'TV-MA', '2026-03-18-TheBoysS4E1.mp4', '4K', 1),
+(46, 21, '4', 'The Boys', 'With only months to live, Butcher has lost his position as leader of The Boys, who are fed up with his lies, and must find a way to work with them if they want to save the world before it\'s too late.', 8.6, 'TV-MA', '2026-03-18-TheBoysS4E2.mp4', '4K', NULL),
+(47, 22, '5', 'The Boys', 'In the season, the world is dominated by Homelander and Annie January has formed a resistance to Homelander while the rest of the team is scattered. But when Billy Butcher reappears, ready to use the virus to wipe out the Supes of the world, he sets in mo', 8.6, 'TV-MA', '2026-03-18-TheBoysS5E1.mp4', '4K', NULL),
+(48, 22, '5', 'The Boys', 'In the season, the world is dominated by Homelander and Annie January has formed a resistance to Homelander while the rest of the team is scattered. But when Billy Butcher reappears, ready to use the virus to wipe out the Supes of the world, he sets in mo', 8.6, 'TV-MA', '2026-03-18-TheBoysS5E2.mp4', '4K', NULL),
+(49, 23, '1', 'Paradise', 'Paradise is set in a serene community inhabited by some of the world\'s most prominent individuals. But this tranquility explodes when a shocking murder occurs and a high-stakes investigation unfolds.', 7.9, 'TV-MA', '2026-03-18-ParadiseS1E1.mp4', 'HD', NULL),
+(50, 23, '1', 'Paradise', 'Paradise is set in a serene community inhabited by some of the world\'s most prominent individuals. But this tranquility explodes when a shocking murder occurs and a high-stakes investigation unfolds.', 7.9, 'TV-MA', '2026-03-18-ParadiseS1E2.mp4', 'HD', NULL),
+(51, 24, '2', 'Paradise', 'Season 2 of the Hulu Original post-apocalyptic political thriller Paradise was picked up on February 20, 2025. It premiered with the first three episodes on February 23, 2026, with new episodes dropping weekly thereafter on Hulu and Hulu on Disney+ for bu', 7.9, 'TV-MA', '2026-03-18-ParadiseS2E1.mp4', 'HD', NULL);
 
 -- --------------------------------------------------------
 
@@ -190,7 +216,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`userid`, `email`, `psw`, `username`, `role`, `watched_episodeid`, `watched_movieid`) VALUES
 (12, 'admin', '$2b$10$2n.iynitioDN3WbZEkw4p.kFDVmsqLzMJmafgwYB17lQRQ8qkPRuq', 'admin1', 1, 0, 0),
-(29, 'email', '$2b$10$5CP7DHNj/rzhc9do9nrkb.9QMy71cDi/Octkf9modkiMcHO3eatdi', 'username', 0, 0, 0);
+(29, 'email', '$2b$10$5CP7DHNj/rzhc9do9nrkb.9QMy71cDi/Octkf9modkiMcHO3eatdi', 'username', 0, 0, 0),
+(30, 'nandihoki', '$2b$10$tyTFFO2ixf43t218p8FynON8tFGmKLSa/fSrKB58avRSKk0uupYBm', 'telefon', 0, 0, 0);
 
 --
 -- Indexek a kiírt táblákhoz
@@ -201,6 +228,12 @@ INSERT INTO `users` (`userid`, `email`, `psw`, `username`, `role`, `watched_epis
 --
 ALTER TABLE `actors`
   ADD PRIMARY KEY (`actorid`);
+
+--
+-- A tábla indexei `feedbacks`
+--
+ALTER TABLE `feedbacks`
+  ADD PRIMARY KEY (`feedbackid`);
 
 --
 -- A tábla indexei `movies`
@@ -245,6 +278,12 @@ ALTER TABLE `actors`
   MODIFY `actorid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT a táblához `feedbacks`
+--
+ALTER TABLE `feedbacks`
+  MODIFY `feedbackid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT a táblához `movies`
 --
 ALTER TABLE `movies`
@@ -272,7 +311,7 @@ ALTER TABLE `show_seasons`
 -- AUTO_INCREMENT a táblához `users`
 --
 ALTER TABLE `users`
-  MODIFY `userid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `userid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- Megkötések a kiírt táblákhoz

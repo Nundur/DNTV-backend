@@ -8,7 +8,7 @@ const userRoutes = require('./routes/userRoutes.js')
 
 const videoRoutes = require('./routes/videoRoutes.js')
 const adminRoutes = require('./routes/adminRoutes.js')
-
+const feedbackRoutes = require('./routes/feedbackRoutes.js')
 
 const app = express()
 app.use(express.json())
@@ -25,7 +25,7 @@ app.use(cors({
 app.use('/users', userRoutes)
 app.use('/videos', videoRoutes)
 app.use('/admin', adminRoutes)
-
+app.use('/feedback', feedbackRoutes)
 //app.use('/users', userRoutes)
 
 module.exports = app
