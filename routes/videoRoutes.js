@@ -34,8 +34,24 @@ ruter.get('/getShow', auth,  async (req, res) => {
     const season = req.query.season;
 
     const sql = `SELECT * FROM show_episodes WHERE showid = ? AND episode = ? AND season = ?`
-    const [result] = await db.query(sql, [showid, episode, season])
-    return res.status(200).json(result)
+    //const [result] = await db.query(sql, [showid, episode, season])
+    try {
+        const [result] = await db.query(sql, [showid, episode, season])
+        return res.status(200).json(result)
+    } catch (error) {
+        return res.status(500).json({message : "kurvaanyad", error})
+    }
+})
+
+ruter.get('/getShowEpisodes', auth,  async (req, res) => {
+    const showid = req.query.showid;
+    const sql = `SELECT * FROM show_episodes WHERE showid = ? `
+    try {
+        const [result] = await db.query(sql, [showid])
+        return res.status(200).json(result)
+    } catch (error) {
+        return res.status(500).json(error)
+    }
 })
 
 
