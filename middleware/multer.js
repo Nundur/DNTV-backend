@@ -11,6 +11,9 @@ const storage = multer.diskStorage({
     if (file.fieldname === "movie") {
       uploadDir = "uploads/movies/"
     }
+    if (file.fieldname === "episodes") {
+      uploadDir = "uploads/episodes/"
+    }
 
     if (file.fieldname === "cover") {
         uploadDir = "uploads/covers/"
@@ -32,10 +35,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({
     storage: storage,
-    limits: { fileSize: 1024 * 1024 * 10 },
     fileFilter: (req, file, cb) => {
-        const filetypes = /jpg|jpeg|png|jfif|webp|svg|ico|avif|gif/
-        const extname = filetypes.test(path.extname(file.originalname))
+        const filetypes = /jpg|jpeg|png|jfif|webp|svg|ico|avif|gif|mp4|avi|mov/
+        const extname = filetypes.test(path.extname(file.originalname).toLowerCase())
         const mimetype  = filetypes.test(file.mimetype)
         //console.log(extname)
         //console.log(mimetype)
@@ -43,7 +45,7 @@ const upload = multer({
         if(extname && mimetype) {
             return cb(null, true)
         } else {
-            cb(new Error('Csak kép formátum'))
+            cb(new Error('Csak kép vagy videó formátum'))
         }
     }
 })
