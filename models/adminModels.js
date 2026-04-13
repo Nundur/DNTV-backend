@@ -11,6 +11,38 @@ async function allUsers() {
 
 
 
+async function bulkUpdate(users) {
 
 
-module.exports = {allUsers}
+    const results = [];
+
+    for (const user of users) {
+        const { userid, username, email, role } = user;
+        //console.log(`${userid} ${username} ${email} ${role}`);
+        const sql = `
+            UPDATE users
+            SET username = ?, email = ?, role = ?
+            WHERE userid = ?
+        `;
+
+        const [result] = await db.query(sql, [
+            username,
+            email,
+            role,
+            userid
+        ]);
+
+        results.push(result);
+    }
+
+
+    //const sql = 'SELECT userid, email, username, role, watched_episodeid, watched_movieid FROM users'
+    //const [result] = await db.query(sql)
+
+
+    return results
+
+}
+
+
+module.exports = { allUsers, bulkUpdate }
