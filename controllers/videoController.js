@@ -1,6 +1,4 @@
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const {config} = require('../config/dotenvConfig')
+
 const {allShows, allMovies, createUser, uploadMovie, featured, uploadShows,
 
     TopRatedMovies,
