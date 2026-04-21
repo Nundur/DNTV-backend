@@ -10,6 +10,16 @@ async function findByEmail(email) {
 }
 
 
+async function monifyUserInDataBase(username, email, userid) {
+    const sql = "UPDATE `users` SET `username`=?,`email`=?, WHERE userid=?"
+    
+    const [result] = await db.query(sql, [username, email, userid])
+
+
+
+    return result.insertId
+}
+
 async function createUser(username, email, hashed) {
     const sql = "INSERT INTO users(userid, email, psw, username, role) VALUES (NULL,?,?,?,?)"
     
@@ -21,4 +31,4 @@ async function createUser(username, email, hashed) {
 }
 
 
-module.exports = {findByEmail, createUser}
+module.exports = {findByEmail, createUser, monifyUserInDataBase}

@@ -14,6 +14,7 @@ ruter.post('/postFeedback', async (req, res) =>{
         const [result] = await db.query(sql, [subject, category, message, email])
         return res.status(201).json({message : "Sikeres feedback feltöltés!", result})
     } catch (error) {
+        console.log(error)
         return res.status(500).json({message : "Sikertelen feedback feltöltés:(", error})
     }
     
