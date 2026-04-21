@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const {config} = require('../config/dotenvConfig')
 const {findByEmail, createUser, monifyUserInDataBase} = require('../models/userModel.js')
@@ -9,9 +9,9 @@ const { rollback } = require('../db/db.js')
 const cookieOpts = {
     httpOnly: true,
     secure: false,
-    sameSite: 'lax',
+    sameSite: 'none',
     path: '/',
-    maxAge: 1000 * 60 * 60 * 24 * 7 
+    maxAge: 1000 * 60 * 60 * 7 * 24
 }
 async function modifyUser (req, res) {
     try {
@@ -21,7 +21,7 @@ async function modifyUser (req, res) {
             return res.status(400).json({error:'A felhasználónév vagy a jelszó üres!'})
         }
         const result = await monifyUserInDataBase
-
+        return res.status(200).json({message:""})
 
     } catch (err) {
         console.log(err)
@@ -45,7 +45,14 @@ async function modifyUser (req, res) {
 
 async function logout (req, res) {
     try {
-        return res.clearCookie(config.COOKIE_NAME, {path: '/'}).status(200).json({message: 'Kijelentkezve'})
+        return res.clearCookie(config.COOKIE_NAME, 
+            {
+                httpOnly: true,
+                secure:true,
+                sameSite: 'none',
+                path: '/'
+            }
+        ).status(200).json({message: 'Kijelentkezve'})
     } catch (err) {
         return res.status(500).json({error: 'logout'})
     }
