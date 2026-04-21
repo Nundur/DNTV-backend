@@ -104,7 +104,7 @@ const ProjectsByStudio = async (studio) => {
 const uploadShows = async (title, desc, studio, imdb, pg, cover, quality, episodes, season) => {
     //                                             title, desc, studio, imdb, pg, cover, image, quality
     const results = [];
-
+    let asd = 0;
 
     episodes.sort((a, b) => {
         const getEpisode = (name) => {
@@ -119,7 +119,7 @@ const uploadShows = async (title, desc, studio, imdb, pg, cover, quality, episod
 
     if (season == 1) {
         //megnézi hogy létezik e már az adott show, és ha igen, ne pusholja fel megintxd (avoid duplication)
-        const checkSql = `SELECT * FROM movies WHERE title = ?`
+        const checkSql = `SELECT * FROM shows WHERE title = ?`
         const [checkResult] = await db.query(checkSql, [title])
         //if
         if (checkResult.length == 0) {
@@ -128,6 +128,16 @@ const uploadShows = async (title, desc, studio, imdb, pg, cover, quality, episod
             const [result] = await db.query(insertToShowsSql, [title, desc, studio, imdb, pg, cover, quality])
             results.push(result)
             console.log(result)
+            //asd = results[0].insertId
+
+
+
+            //asd az elvileg a showid normális megoldása, nem tom miért így csináltam, fáradt vagyok
+            asd = result.insertId
+        }  else {
+            //results.push(checkResult)
+            //asd = results[0].showid
+            asd = checkResult[0].showid
         }
         //console.log(result.length)
 
@@ -136,7 +146,7 @@ const uploadShows = async (title, desc, studio, imdb, pg, cover, quality, episod
 
     for (let i = 0; i < episodes.length; i++) {
         const sql = 'INSERT INTO `show_episodes`(`episodeid`, `showid`, `season`, `title`, `description`, `imdbrating`, `pgrating`, `file`, `quality`, `episode`) VALUES (NULL,?,?,?,?,?,?,?,?,?)'
-        const [episodeResult] = await db.query(sql, [result.insertId, season, title, desc, imdb, pg, episodes[i].filename, quality, i + 1])
+        const [episodeResult] = await db.query(sql, [asd, season, title, desc, imdb, pg, episodes[i].filename, quality, i + 1])
         results.push(episodeResult)
         console.log(episodeResult)
     }

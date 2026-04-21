@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const {config} = require('../config/dotenvConfig')
-const {findByEmail, createUser} = require('../models/userModel.js')
+const {findByEmail, createUser, monifyUserInDataBase} = require('../models/userModel.js')
 const { rollback } = require('../db/db.js')
 
 
@@ -13,6 +13,35 @@ const cookieOpts = {
     path: '/',
     maxAge: 1000 * 60 * 60 * 24 * 7 
 }
+async function modifyUser (req, res) {
+    try {
+        const {username, email, userid} = req.body
+
+        if (!username ||!email || !userid) {
+            return res.status(400).json({error:'A felhasználónév vagy a jelszó üres!'})
+        }
+        const result = await monifyUserInDataBase
+
+
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({error: 'modifyUserProblem', err})
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 async function logout (req, res) {
     try {
@@ -102,4 +131,4 @@ async function login(req, res) {
 }
 
 
-module.exports = { register, login, whoAmI, logout}
+module.exports = { register, login, whoAmI, logout, modifyUser}
