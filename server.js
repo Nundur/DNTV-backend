@@ -9,5 +9,5 @@ const HOST = config.HOST;
 
 
 app.listen(PORT, HOST, ()=>{
-    console.log(`Fut a szerver : http://${HOST}:${PORT}`)
+    console.log(`Fut a szerver : http://localhost:${PORT}`)
 })
