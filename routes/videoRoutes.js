@@ -1,6 +1,7 @@
 const express = require('express')
 const { getVideo, postShow, postMovie, getAllShows, getAllMovies, getRandomProjects,
     getMovie, getShow, streamShow, streamMovie,
+    putShow,
 
 
 
@@ -86,6 +87,20 @@ ruter.get('/getProjectsByPG/:pg', getProjectsByPG)
 //ruter.post('/postMovie', auth, upload.single("movie"), postMovie)
 ruter.post('/postMovie', auth, upload.fields([{ name: "movie", maxCount: 1 }, { name: "cover", maxCount: 1 }]), postMovie)
 ruter.post('/postShow', auth, upload.fields([{ name: "episodes", maxCount: 100 }, { name: "cover", maxCount: 1 }]), postShow)
+
+
+
+ruter.post('/putShow', auth, putShow)
+
+
+
+
+
+
+
+
+
+
 
 //ruter.get('/show/:filename', streamShow)
 //ruter.get('/movie/:filename', streamMovie)
