@@ -9,7 +9,7 @@ const { rollback } = require('../db/db.js')
 const cookieOpts = {
     httpOnly: true,
     secure: false,
-    sameSite: 'none',
+    sameSite: 'lax',
     path: '/',
     maxAge: 1000 * 60 * 60 * 7 * 24
 }
