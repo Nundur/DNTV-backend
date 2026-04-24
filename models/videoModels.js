@@ -157,4 +157,20 @@ const uploadShows = async (title, desc, studio, imdb, pg, cover, quality, episod
     return results;
 }
 
-module.exports = { allShows, allMovies, featured, uploadMovie, uploadShows, TopRatedTvSeries, TopRatedMovies, TopRatedTvSeriesAndMovies, ProjectsByPG, ProjectsByStudio };
+
+const modifyShow = async (showid, title, description, studio, imdbrating, pgrating, quality) => {
+    //                                             title, desc, studio, imdb, pg, cover, image, quality
+    const sql = 'UPDATE `shows` SET `title`=?,`description`=?,`studio`=?,`imdbrating`=?,`pgrating`=?,`quality`=? WHERE showid=?'
+    const [result] = await db.query(sql, [title, description, studio, imdbrating, pgrating, quality, showid])
+    return result.insertId
+}
+
+
+const modifyMovie = async (showid, title, description, studio, imdbrating, pgrating, quality) => {
+    //                                             title, desc, studio, imdb, pg, cover, image, quality
+    const sql = 'UPDATE `movies` SET `title`=?,`description`=?,`studio`=?,`imdbrating`=?,`pgrating`=?,`quality`=? WHERE showid=?'
+    const [result] = await db.query(sql, [title, description, studio, imdbrating, pgrating, quality, showid])
+    return result.insertId
+}
+module.exports = { allShows, allMovies, featured, uploadMovie, uploadShows, TopRatedTvSeries, 
+    TopRatedMovies, TopRatedTvSeriesAndMovies, ProjectsByPG, ProjectsByStudio, modifyShow, modifyMovie };

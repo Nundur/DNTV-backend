@@ -4,7 +4,9 @@ const {allShows, allMovies, createUser, uploadMovie, featured, uploadShows,
     TopRatedMovies,
     TopRatedTvSeries, TopRatedTvSeriesAndMovies,
     ProjectsByStudio,
-    ProjectsByPG
+    ProjectsByPG,
+    modifyShow,
+    modifyMovie
 } = require('../models/videoModels.js')
 const { rollback } = require('../db/db.js')
 const fs = require("fs");
@@ -189,89 +191,50 @@ const getProjectsByPG = async(req, res)=>{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-const streamShow = (req, res) => {
-    const videoPath = path.join("uploads/movies", req.params.filename);
-  
-
-
-
-
-
-
-    if (!fs.existsSync(videoPath)) {
-      return res.status(404).send("Video not found");
+const putShow = async(req, res)=>{
+    try {
+        //title, desc, studio, imdb, pg, cover, image, quality
+        //const { title, desc, studio, imdb, pg, quality } = req.body;
+        
+        const { showid, title, description, studio, imdbrating, pgrating, quality } = req.body;
+        
+        const result = await modifyShow(showid, title, description, studio, imdbrating, pgrating, quality)
+        return res.status(201).json(result)
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({ error: 'Adatbázis hiba ', err })
     }
-  
-    const stat = fs.statSync(videoPath);
-    const fileSize = stat.size;
-  
-    const range = req.headers.range;
-    if (!range) return res.status(400).send("Range header required");
-  
-    const parts = range.replace(/bytes=/, "").split("-");
-    const start = parseInt(parts[0], 10);
-    const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
-    const chunkSize = end - start + 1;
-  
-    const stream = fs.createReadStream(videoPath, { start, end });
-  
-    res.writeHead(206, {
-      "Content-Range": `bytes ${start}-${end}/${fileSize}`,
-      "Accept-Ranges": "bytes",
-      "Content-Length": chunkSize,
-      "Content-Type": "video/mp4",
-    });
-  
-    stream.pipe(res);
+}
+
+
+const putMovie = async(req, res)=>{
+    try {
+        //title, desc, studio, imdb, pg, cover, image, quality
+        //const { title, desc, studio, imdb, pg, quality } = req.body;
+        
+        const { showid, title, description, studio, imdbrating, pgrating, quality } = req.body;
+        
+        const result = await modifyMovie(showid, title, description, studio, imdbrating, pgrating, quality)
+        return res.status(201).json(result)
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({ error: 'Adatbázis hiba ', err })
+    }
 }
 
 
 
-const streamMovie = (req, res) => {
-    const videoPath = path.join("uploads/movies", req.params.filename);
-    if (!fs.existsSync(videoPath)) {
-      return res.status(404).send("Video not found");
-    }
-  
-    const stat = fs.statSync(videoPath);
-    const fileSize = stat.size;
-  
-    const range = req.headers.range;
-    if (!range) return res.status(400).send("Range header required");
-  
-    const parts = range.replace(/bytes=/, "").split("-");
-    const start = parseInt(parts[0], 10);
-    const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
-    const chunkSize = end - start + 1;
-  
-    const stream = fs.createReadStream(videoPath, { start, end });
-  
-    res.writeHead(206, {
-      "Content-Range": `bytes ${start}-${end}/${fileSize}`,
-      "Accept-Ranges": "bytes",
-      "Content-Length": chunkSize,
-      "Content-Type": "video/mp4",
-    });
-  
-    stream.pipe(res);
-}
-*/
 
 
 
 
-module.exports = {getAllShows, getAllMovies, getRandomProjects, postMovie, postShow, getTopRatedTvSeries, getTopRatedMovies, getTopRatedTvSeriesAndMovies, getProjectsByStudio, getProjectsByPG};
+
+
+
+
+
+
+
+
+module.exports = {getAllShows, getAllMovies, getRandomProjects, postMovie, postShow, getTopRatedTvSeries, 
+    getTopRatedMovies, getTopRatedTvSeriesAndMovies, getProjectsByStudio, getProjectsByPG, putShow, putMovie};
