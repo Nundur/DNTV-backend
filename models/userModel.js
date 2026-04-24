@@ -23,7 +23,7 @@ async function monifyUserInDataBase(username, email, userid) {
 async function createUser(username, email, hashed) {
     const sql = "INSERT INTO users(userid, email, psw, username, role) VALUES (NULL,?,?,?,?)"
     
-    const [result] = await db.query(sql, [email, hashed, username, 'user'])
+    const [result] = await db.query(sql, [email, hashed, username, 0])
 
 
 
