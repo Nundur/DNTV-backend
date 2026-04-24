@@ -5,7 +5,8 @@ const {allShows, allMovies, createUser, uploadMovie, featured, uploadShows,
     TopRatedTvSeries, TopRatedTvSeriesAndMovies,
     ProjectsByStudio,
     ProjectsByPG,
-    modifyShow
+    modifyShow,
+    modifyMovie
 } = require('../models/videoModels.js')
 const { rollback } = require('../db/db.js')
 const fs = require("fs");
@@ -206,6 +207,21 @@ const putShow = async(req, res)=>{
 }
 
 
+const putMovie = async(req, res)=>{
+    try {
+        //title, desc, studio, imdb, pg, cover, image, quality
+        //const { title, desc, studio, imdb, pg, quality } = req.body;
+        
+        const { showid, title, description, studio, imdbrating, pgrating, quality } = req.body;
+        
+        const result = await modifyMovie(showid, title, description, studio, imdbrating, pgrating, quality)
+        return res.status(201).json(result)
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({ error: 'Adatbázis hiba ', err })
+    }
+}
+
 
 
 
@@ -221,4 +237,4 @@ const putShow = async(req, res)=>{
 
 
 module.exports = {getAllShows, getAllMovies, getRandomProjects, postMovie, postShow, getTopRatedTvSeries, 
-    getTopRatedMovies, getTopRatedTvSeriesAndMovies, getProjectsByStudio, getProjectsByPG, putShow};
+    getTopRatedMovies, getTopRatedTvSeriesAndMovies, getProjectsByStudio, getProjectsByPG, putShow, putMovie};

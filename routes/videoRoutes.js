@@ -1,7 +1,7 @@
 const express = require('express')
 const { getVideo, postShow, postMovie, getAllShows, getAllMovies, getRandomProjects,
     getMovie, getShow, streamShow, streamMovie,
-    putShow,
+    putShow,putMovie,
 
 
 
@@ -91,7 +91,7 @@ ruter.post('/postShow', auth, upload.fields([{ name: "episodes", maxCount: 100 }
 
 
 ruter.post('/putShow', auth, putShow)
-
+ruter.post('/putMovie', auth, putMovie)
 
 
 
