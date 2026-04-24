@@ -8,6 +8,6 @@ const HOST = config.HOST;
 
 
 
-app.listen(PORT, HOST, ()=>{
+app.listen(PORT, ()=>{
     console.log(`Fut a szerver : http://localhost:${PORT}`)
 })
