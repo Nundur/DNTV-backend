@@ -35,14 +35,83 @@ async function bulkUpdate(users) {
         results.push(result);
     }
 
+    return results
 
-    //const sql = 'SELECT userid, email, username, role, watched_episodeid, watched_movieid FROM users'
-    //const [result] = await db.query(sql)
+}
+async function bulkUpdateM(movies) {
 
+
+    const results = [];
+
+    for (const movie of movies) {
+        const { movieid, title, description, studio, imdbrating, pgrating, quality } = movie;
+        //console.log(`${userid} ${username} ${email} ${role}`);
+        const sql = 
+        "UPDATE movies SET title=?,description=?,studio=?,imdbrating=?,pgrating=?,quality=? WHERE movieid=?";
+
+        const [result] = await db.query(sql, [
+            title, description, studio, imdbrating, pgrating, quality, movieid 
+        ]);
+
+        results.push(result);
+    }
 
     return results
 
 }
+async function bulkUpdateS(shows) {
+    const results = [];
 
+    for (const show of shows) {
+        const { showid, title, description, studio, imdbrating, pgrating, quality } = show;
+        //console.log(`${userid} ${username} ${email} ${role}`);
+        const sql = 
+        "UPDATE shows SET title=?,description=?,studio=?,imdbrating=?,pgrating=?,quality=? WHERE showid=?";
 
-module.exports = { allUsers, bulkUpdate }
+        const [result] = await db.query(sql, [
+            title, description, studio, imdbrating, pgrating, quality, showid 
+        ]);
+
+        results.push(result);
+    }
+
+    return results
+
+}
+async function deleteUserById(userid) {
+
+    const sql = 
+        "DELETE FROM users WHERE userid=?";
+
+        const [result] = await db.query(sql, [
+            userid
+        ]);
+
+    return result
+
+}
+
+async function deleteMovieById(movieid) {
+    const sql = 
+        "DELETE FROM movies WHERE movieid=?";
+
+        const [result] = await db.query(sql, [
+            movieid
+        ]);
+
+    return result
+
+}
+async function deleteShowById(showid) {
+    const sql = 
+        "DELETE FROM shows WHERE showid=?; DELETE FROM show_episodes WHERE showid=? ";
+
+        const [result] = await db.query(sql, [
+            showid, showid
+        ]);
+        
+    return result
+
+}
+
+module.exports = { allUsers, bulkUpdate, bulkUpdateM, bulkUpdateS, deleteUserById, deleteMovieById, deleteShowById }
