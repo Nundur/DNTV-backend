@@ -12,8 +12,8 @@ ruter.post('/bulk-update-movies', authAdmin, bulkUpdateMovies)
 ruter.post('/bulk-update-shows', authAdmin, bulkUpdateShows)
 
 ruter.delete('/delete-user/:userid', authAdmin, deleteUser)
-ruter.delete('/delete-movie/:userid', authAdmin, deleteMovie)
-ruter.delete('/delete-show/:userid', authAdmin, deleteShow)
+ruter.delete('/delete-movie/:movieid', authAdmin, deleteMovie)
+ruter.delete('/delete-show/:showid', authAdmin, deleteShow)
 
 
 
