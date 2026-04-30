@@ -10,10 +10,10 @@ async function findByEmail(email) {
 }
 
 
-async function monifyUserInDataBase(username, email, userid) {
-    const sql = "UPDATE `users` SET `username`=?,`email`=?, WHERE userid=?"
+async function monifyUserInDataBase(username, email) {
+    const sql = "UPDATE `users` SET `username`=?,`email`=?, WHERE email=?"
     
-    const [result] = await db.query(sql, [username, email, userid])
+    const [result] = await db.query(sql, [username, email, email])
 
 
 
