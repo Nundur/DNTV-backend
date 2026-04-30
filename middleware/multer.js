@@ -45,7 +45,7 @@ const upload = multer({
         if(extname && mimetype) {
             return cb(null, true)
         } else {
-            cb(new Error('Csak kép vagy videó formátum'))
+            cb(new Error('Only picture or video format'))
         }
     }
 })

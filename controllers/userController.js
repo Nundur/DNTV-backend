@@ -25,7 +25,7 @@ async function modifyUser (req, res) {
 
     } catch (err) {
         console.log(err)
-        return res.status(500).json({error: 'modifyUserProblem', err})
+        return res.status(500).json({error: 'Nem sikerült a felhasználót megváltoztatni!', err})
     }
 }
 
@@ -54,7 +54,7 @@ async function logout (req, res) {
             }
         ).status(200).json({message: 'Kijelentkezve'})
     } catch (err) {
-        return res.status(500).json({error: 'logout'})
+        return res.status(500).json({error: 'Logout error!'})
     }
 }
 
@@ -73,13 +73,13 @@ async function register(req, res) {
         const {email, username, psw} = req.body
         console.log(`${email} ${username} ${psw}`)
         if(!email || !username || !psw){
-            return res.status(400).json({error:'A felhazsnálónév vagy a jelszó üres:('})
+            return res.status(400).json({error:'Username, email and password cannot be empty!'})
         }
 
         const exists = await findByEmail(email)
 
         if(exists){
-            return res.status(409).json({error:"Az email már foglalt"})
+            return res.status(409).json({error:"This specific email is occupied"})
         }
 
 
@@ -87,13 +87,13 @@ async function register(req, res) {
         const hash = await bcrypt.hash(psw, 10)
 
         const {insertId} = await createUser(username, email, hash)
-        return res.status(201).json({message : 'sikeres regisztráció', insertId})
+        return res.status(201).json({message : 'Succesfull registration', insertId})
     } catch (err) {
         console.log(err.code)
         if (err.code == "ER_DUP_ENTRY") {
-            return res.status(500).json({error:'Felhazsnáló már foglalt!', err}) 
+            return res.status(500).json({error:'Username is occupied', err}) 
         }
-        return res.status(500).json({error:'Regisztrációs hiba!', err})
+        return res.status(500).json({error:'Registration error!', err})
         
     }
 }
@@ -103,18 +103,18 @@ async function login(req, res) {
         const {email, psw} = req.body
 
         if(!email || !psw){
-            return res.status(400).json({error:'Email és jelszó kötelező öcsisajt!'})
+            return res.status(400).json({error:'Email and password is necessary for login!'})
         }
 
         const exists = await findByEmail(email)
 
 
         if (!exists) {
-            return res.status(409).json({error:'Hibás email!'})
+            return res.status(409).json({error:'Wrong email!'})
         }
         const ok = await bcrypt.compare(psw, exists.psw)
         if (!ok) {
-            return res.status(409).json({error:'Hibás jelszó!'})
+            return res.status(409).json({error:'Wrong password!'})
         }
 
 
@@ -130,7 +130,7 @@ async function login(req, res) {
         })
 
         res.cookie(config.COOKIE_NAME, token, cookieOpts)
-        return res.status(200).json({message: "Sikeres login"})
+        return res.status(200).json({message: "Succesful login"})
     } catch (err) {
         
     }
