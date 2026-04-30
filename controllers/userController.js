@@ -15,13 +15,13 @@ const cookieOpts = {
 }
 async function modifyUser (req, res) {
     try {
-        const {username, email, userid} = req.body
+        const {username, email, } = req.body
 
-        if (!username ||!email || !userid) {
+        if (!username ||!email) {
             return res.status(400).json({error:'A felhasználónév vagy a jelszó üres!'})
         }
-        const result = await monifyUserInDataBase
-        return res.status(200).json({message:""})
+        const result = await monifyUserInDataBase(username, email)
+        return res.status(200).json({message:"Sikeres felhasználó módosítás!"})
 
     } catch (err) {
         console.log(err)
