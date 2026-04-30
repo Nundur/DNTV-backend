@@ -20,7 +20,7 @@ const getAllShows = async (req, res)=>{
 
         return res.status(200).json(result)
     } catch (err) {
-        return res.status(500).json({error: 'adatbázis hiba', err})
+        return res.status(500).json({error: 'Database error', err})
     }
 }
 
@@ -31,7 +31,7 @@ const getAllMovies = async (req, res)=>{
 
         return res.status(200).json(result)
     } catch (err) {
-        return res.status(500).json({error: 'adatbázis hiba', err})
+        return res.status(500).json({error: 'Database error', err})
     }
 }
 
@@ -46,7 +46,7 @@ const postVideo = async (req, res)=>{
 
         return res.status(200).json(result)
     } catch (err) {
-        return res.status(500).json({error: 'adatbázis hiba', err})
+        return res.status(500).json({error: 'Database error', err})
     }
 }*/
 
@@ -58,7 +58,7 @@ const getRandomProjects = async (req, res)=>{
 
         return res.status(200).json(result)
     } catch (err) {
-        return res.status(500).json({error: 'adatbázis hiba', err})
+        return res.status(500).json({error: 'Database error', err})
     }
 }
 
@@ -78,7 +78,7 @@ const postMovie = async(req, res)=>{
         return res.status(201).json({message : 'sikerült:D ', result})
     } catch (err) {
         console.log(err)
-        return res.status(500).json({ error: 'Adatbázis hiba ', err })
+        return res.status(500).json({ error: 'Database error ', err })
     }
 }
 
@@ -104,7 +104,7 @@ const postShow = async(req, res)=>{
         return res.status(201).json({message : 'sikerült:D ', result})
     } catch (err) {
         console.log(err)
-        return res.status(500).json({ error: 'Adatbázis hiba ', err })
+        return res.status(500).json({ error: 'Database error ', err })
     }
 }
 
@@ -120,7 +120,7 @@ const getTopRatedTvSeries = async(req, res)=>{
         return res.status(201).json(result)
     } catch (err) {
         console.log(err)
-        return res.status(500).json({ error: 'Adatbázis hiba ', err })
+        return res.status(500).json({ error: 'Database error ', err })
     }
 }
 
@@ -136,7 +136,7 @@ const getTopRatedMovies = async(req, res)=>{
         return res.status(201).json(result)
     } catch (err) {
         console.log(err)
-        return res.status(500).json({ error: 'Adatbázis hiba ', err })
+        return res.status(500).json({ error: 'Database error ', err })
     }
 }
 
@@ -153,7 +153,7 @@ const getTopRatedTvSeriesAndMovies = async(req, res)=>{
         return res.status(201).json(result)
     } catch (err) {
         console.log(err)
-        return res.status(500).json({ error: 'Adatbázis hiba ', err })
+        return res.status(500).json({ error: 'Database error ', err })
     }
 }
 
@@ -168,7 +168,7 @@ const getProjectsByStudio = async(req, res)=>{
         return res.status(201).json(result)
     } catch (err) {
         console.log(err)
-        return res.status(500).json({ error: 'Adatbázis hiba ', err })
+        return res.status(500).json({ error: 'Database error ', err })
     }
 }
 
@@ -185,7 +185,7 @@ const getProjectsByPG = async(req, res)=>{
         return res.status(201).json(result)
     } catch (err) {
         console.log(err)
-        return res.status(500).json({ error: 'Adatbázis hiba ', err })
+        return res.status(500).json({ error: 'Database error ', err })
     }
 }
 
@@ -202,7 +202,7 @@ const putShow = async(req, res)=>{
         return res.status(201).json(result)
     } catch (err) {
         console.log(err)
-        return res.status(500).json({ error: 'Adatbázis hiba ', err })
+        return res.status(500).json({ error: 'Database error ', err })
     }
 }
 
@@ -218,7 +218,7 @@ const putMovie = async(req, res)=>{
         return res.status(201).json(result)
     } catch (err) {
         console.log(err)
-        return res.status(500).json({ error: 'Adatbázis hiba ', err })
+        return res.status(500).json({ error: 'Database error ', err })
     }
 }
 

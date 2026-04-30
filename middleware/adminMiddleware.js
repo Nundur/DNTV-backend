@@ -7,7 +7,7 @@ function authAdmin(req, res, next) {
     const token = req.cookies?.[config.COOKIE_NAME]
     //clearconsole.log(`${token} - asd `);
     if (!token) {
-        return res.status(401).json({error: 'nincsen cookie'})
+        return res.status(401).json({error: 'Unauthorized persons are prohibited from viewing this content!'})
     }
     try {
         req.user = jwt.verify(token, config.JWT_SECRET)
@@ -25,9 +25,9 @@ function authAdmin(req, res, next) {
         
     } catch (err) {
         if(err.message == "noadmin"){
-            return res.status(401).json({error: 'Nem admin fiók!'})
+            return res.status(401).json({error: 'Users without administrative privileges cannot view this content!'})
         }
-        return res.status(401).json({error: 'Érvénytelen token'})
+        return res.status(401).json({error: 'Invalid token'})
     }
 
 }
