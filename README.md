@@ -13,12 +13,8 @@
 - [Technológiai stack](#tech-stack)
 - [Adatbázis struktúra](#adatbazis)
 - [Projekt struktúra](#struktura)
-- [Környezeti változók](#env)
 - [API végpontok](#api)
-- [Biztonsági funkciók](#biztonsag)
 - [Használt függőségek](#fuggosegek)
-- [Tesztelés](#teszt)
-- [Jövőbeli fejlesztések](#jovo)
 
 
 <a id="projekt"></a>
@@ -91,3 +87,70 @@ project-root/
 └── db/
 │   ├── db.js                  # Adatbázis betöltése, funkciók
 ```
+
+<a id="api"></a>
+## 🌐 API végpontok
+
+### Felhasználói útvonalak
+
+- **POST** `/users/register`: Regisztráció
+- **POST** `/users/login`: Bejelentkezés
+- **GET** `/users/whoami`: Whoami
+- **POST** `/users/logout`: Kijelentkezés
+- **PUT** `/users/modifyUser`: Felhasználó megváltoztatása
+
+### Admin útvonalak
+
+- **GET** `/admin/getAllUsers`: Összes felhasználó lekérdezése
+- **POST** `/admin/bulk-update-users`: Összes felhasználó tömeges megváltoztatása
+- **POST** `/admin/bulk-update-movies`: Összes film tömeges megváltoztatása
+- **POST** `/admin/bulk-update-shows`: Összes show tömeges megváltoztatása
+- **DELETE** `/admin/delete-user/userid`: Összes felhasználóból törlés
+- **DELETE** `/admin/delete-movie/movieid`: Összes filmből törlés
+- **DELETE** `/admin/delete-show/showid`: Összes showból törlés
+
+### Videó útvonalak
+
+- **GET** `/videos/getAllShows`: Összes show-t lekérni
+- **GET** `/videos/getAllMovies`: Összes filmet lekérni
+- **POST** `/videos/getRandomProjects`: Random projekteket lekérni
+- **GET** `/videos/getMovie`: Lekérni egy film-ről adatokat
+- **GET** `/videos/getShow`: Lekérni egy show-ról adatokat
+- **GET** `/videos/getShowEpisodes`: Egy show-nak az epizódjai
+- **GET** `/videos/test`: Teszt végpont
+- **GET** `/videos/getTopRatedTvSeries/:count`: Topra értékelt show-k (darab szám)
+- **GET** `/videos/getTopRatedMovies/:count`: Topra értékelt filmek (darab szám)
+- **GET** `/videos/getTopRatedTvSeriesAndMovies/:count`: Topra értékelt show és filmek
+- **GET** `/videos/getProjectsByStudio/:studio`: Studio által lekérni projekteket
+- **GET** `/videos/getProjectsByPG/:pg`: Pg által lekérni projekteket
+- **POST** `/videos/postShow`: Feltenni egy show
+- **POST** `/videos/postMovie`: Feltenni egy filmet
+- **PUT** `/videos/putShow`: Szerkeszteni egy sorozatot
+- **PUT** `/videos/putMovie`: Szerkeszteni egy filmet
+
+### Visszajelzési útvonalak
+
+- **POST** `/feedbacks/postFeedback`: Visszajelzés kűldése
+
+<a id="fuggosegek"></a>
+## 📦 Használt függőségek
+
+```json
+{
+    "devDependencies": {
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.0.2",
+    "mysql2": "^3.17.2",
+    "nodemon": "^3.1.11"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3"
+  }
+}
+```
+
+© 2026 DNTV. Minden jog fenntartva.
